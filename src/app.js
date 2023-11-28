@@ -6,7 +6,7 @@ import authRoutes from "./routes/auth.routes.js";
 import cors from "cors";
 
 const app = express();
-app.use(cors({ credentials: true }));
+app.use(cors({ origin: "https://defensaerea.cl", credentials: true }));
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
