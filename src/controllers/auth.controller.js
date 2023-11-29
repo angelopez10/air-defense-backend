@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { createAccessToken } from "../libs/jwt.js";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
 
 export const register = async (req, res) => {
@@ -33,6 +33,7 @@ export const register = async (req, res) => {
       address: userSaved.address,
       email: userSaved.email,
       isAdmin: userSaved.isAdmin,
+      token,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -55,7 +56,7 @@ export const login = async (req, res) => {
     res.cookie("token", token, {
       sameSite: "none",
       secure: true,
-      httpOnly: false
+      httpOnly: false,
     });
     res.json({
       id: userFound._id,
@@ -65,6 +66,7 @@ export const login = async (req, res) => {
       address: userFound.address,
       email: userFound.email,
       isAdmin: userFound.isAdmin,
+      token,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -106,7 +108,7 @@ export const verifyToken = async (req, res) => {
       id: userFound._id,
       username: userFound.username,
       email: userFound.email,
-      isAdmin: userFound.isAdmin
+      isAdmin: userFound.isAdmin,
     });
   });
 };
